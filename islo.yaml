@@ -1,0 +1,31 @@
+# Islo Configuration
+# See https://docs.islo.dev/configuration for details
+
+# Sandbox name (optional - server generates if not set)
+# sandbox: my-project
+
+# Container image (optional)
+# image: docker.io/library/islo-runner:latest
+
+# Resource limits (optional)
+# cpus: 2
+# memory_mb: 2048
+# disk_gb: 10
+
+# Environment variables (optional)
+# env:
+#   MY_VAR: value
+
+# Shell script to run after cloning sources (optional)
+# setup_script: |
+#   npm install
+#   pip install -r requirements.txt
+
+# Source repositories to clone into the sandbox (optional)
+# sources:
+#   - url: https://github.com/owner/repo
+#     branch: main
+#   - url: github://owner/other-repo
+
+# Working directory for all operations (relative to /workspace, or absolute path)
+# workdir: repo
