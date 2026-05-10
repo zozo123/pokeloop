@@ -1,31 +1,22 @@
-# Islo Configuration
-# See https://docs.islo.dev/configuration for details
+# Islo Configuration for pokeloop GA demo
+sandbox: pokeloop-ga
+image: docker.io/library/python:3.12-slim
 
-# Sandbox name (optional - server generates if not set)
-# sandbox: my-project
+cpus: 2
+memory_mb: 2048
+disk_gb: 5
 
-# Container image (optional)
-# image: docker.io/library/islo-runner:latest
+sources:
+  - url: https://github.com/zozo123/pokeloop
+    branch: main
 
-# Resource limits (optional)
-# cpus: 2
-# memory_mb: 2048
-# disk_gb: 10
+env:
+  PYTHONUNBUFFERED: "1"
+  POKELOOP_PORT: "8081"
 
-# Environment variables (optional)
-# env:
-#   MY_VAR: value
-
-# Shell script to run after cloning sources (optional)
-# setup_script: |
-#   npm install
-#   pip install -r requirements.txt
-
-# Source repositories to clone into the sandbox (optional)
-# sources:
-#   - url: https://github.com/owner/repo
-#     branch: main
-#   - url: github://owner/other-repo
-
-# Working directory for all operations (relative to /workspace, or absolute path)
-# workdir: repo
+setup_script: |
+  set -e
+  apt-get update -qq
+  apt-get install -qq -y curl tmux
+  pip install --quiet --no-input fastapi 'uvicorn[standard]' pillow pydantic websockets httpx
+  echo "[setup] dependencies installed"
