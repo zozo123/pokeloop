@@ -1,0 +1,32 @@
+.venv-mock/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# Recordings (raw); keep only the final mp4/gif under docs/assets/
+movie/page@*.webm
+movie_ga/page@*.webm
+movie/sample-*.png
+movie_ga/sample-*.png
+
+# Server logs
+ga_server.log
+server.log
+
+# Run logs
+runs/
+
+# Local ROMs (never bundle copyrighted ROMs)
+roms/*.gb
+roms/*.gbc
+roms/*.gba
+
+# Local policies (v1+ written at runtime)
+policies/v[1-9]*.txt
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

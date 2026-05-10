@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>How AI Learns to Play Pokémon GO — Genetic Algorithms on islo.dev</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <div class="title">
+      <span class="poke">How AI Learns to Play Pokémon GO</span>
+      <span class="sub">Genetic algorithms over LLM policies, on <b>islo.dev</b> sandboxes</span>
+    </div>
+    <div class="gen-badge">
+      <span class="lbl">generation</span>
+      <span class="big" id="gen">0</span>
+      <span class="of">/ <span id="totalgen">8</span></span>
+    </div>
+    <div class="best-badge">
+      <span class="lbl">best fitness</span>
+      <span class="big" id="best">+0.00</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="population-pane">
+      <h2>population — 8 islo.dev sandboxes in parallel</h2>
+      <div class="grid" id="grid">
+        <!-- 8 panels injected by JS -->
+      </div>
+      <div class="status-row">
+        <span id="status-text">booting…</span>
+      </div>
+    </section>
+
+    <aside class="lineage-pane">
+      <h2>lineage tree — generations × population</h2>
+      <svg id="lineage" viewBox="0 0 360 460" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="legend">
+        <span><span class="dot elite"></span>elite</span>
+        <span><span class="dot child"></span>crossover</span>
+        <span><span class="dot mutated"></span>mutated</span>
+      </div>
+    </aside>
+
+    <section class="rank-pane">
+      <h2>fitness ranking — current generation</h2>
+      <div id="rank-bars"></div>
+    </section>
+
+    <section class="curve-pane">
+      <h2>generational gain curve</h2>
+      <svg id="gain-curve" viewBox="0 0 480 200" preserveAspectRatio="none"></svg>
+      <div class="curve-legend">
+        <span><span class="ln max"></span>best</span>
+        <span><span class="ln mean"></span>mean</span>
+        <span><span class="ln min"></span>worst</span>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>population × generations · 8 sandboxes/gen · top-2 elite + tournament crossover + 50% mutation rate</span>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

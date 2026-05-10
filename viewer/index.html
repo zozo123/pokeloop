@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>How I Learn to Play Pokémon GO on islo.dev Sandboxes</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <div class="title">
+      <span class="poke">How I Learn to Play Pokémon GO</span>
+      <span class="sub">on <b>islo.dev</b> sandboxes — snapshot tree IS the search tree</span>
+    </div>
+    <div class="version-badge">
+      policy <span id="version">v0</span>
+      <span class="dot" id="status">●</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="game-pane">
+      <div class="screen-wrap">
+        <canvas id="screen" width="160" height="144"></canvas>
+        <div id="evolution-overlay" class="hidden">
+          <div class="flash"></div>
+          <div class="silhouette"></div>
+          <div class="evo-text">Policy is evolving!</div>
+        </div>
+      </div>
+      <div id="hud">
+        <div class="hud-card"><div class="hud-k">badges</div><div class="hud-v" id="badges">0</div></div>
+        <div class="hud-card"><div class="hud-k">pokédex</div><div class="hud-v" id="pokedex">0</div></div>
+        <div class="hud-card"><div class="hud-k">map</div><div class="hud-v" id="map">—</div></div>
+        <div class="hud-card"><div class="hud-k">cum reward</div><div class="hud-v" id="cumr">0.0</div></div>
+      </div>
+      <div class="last-action">
+        <span class="lbl">last:</span>
+        <span class="btn" id="last-btn">—</span>
+        <span class="why" id="last-why">booting…</span>
+      </div>
+    </section>
+
+    <aside class="thoughts-pane">
+      <h2>agent thoughts</h2>
+      <ol id="thought-stream"></ol>
+    </aside>
+
+    <aside class="tree-pane">
+      <h2>fork tree (snapshot fan-out)</h2>
+      <svg id="tree" viewBox="0 0 420 300" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="tree-legend">
+        <span><span class="dot win"></span>winner</span>
+        <span><span class="dot lose"></span>loser</span>
+        <span><span class="dot main"></span>main timeline</span>
+      </div>
+    </aside>
+
+    <section class="evo-pane">
+      <h2>policy evolution</h2>
+      <svg id="reward-curve" viewBox="0 0 600 140" preserveAspectRatio="none"></svg>
+      <ol id="versions"></ol>
+    </section>
+  </main>
+
+  <footer>
+    <span>snapshot tree IS the search tree · K=8 forks/decision · DPO every 10 decisions</span>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

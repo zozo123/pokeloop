@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pokeloop — How AI Learns to Play Pokémon GO on Sandboxes</title>
+  <meta name="description" content="A population of LLM agents evolves via genetic algorithms in parallel islo.dev sandboxes — and learns to earn its first Pokémon badge in 8 generations.">
+  <meta property="og:title" content="How AI Learns to Play Pokémon GO on Sandboxes">
+  <meta property="og:description" content="Genetic algorithms over LLM policies, on parallel forkable VMs.">
+  <meta property="og:image" content="assets/screenshot.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <div class="brand">
+    <span class="logo">●</span>
+    <span class="name">pokeloop</span>
+  </div>
+  <div class="links">
+    <a href="#tldr">TL;DR</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#method">Method</a>
+    <a href="#results">Results</a>
+    <a href="#prompt">Prompt</a>
+    <a href="#related">Related</a>
+    <a href="https://github.com/REPLACE_ME/pokeloop" class="ghbtn">GitHub →</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <h1>How AI Learns to Play <span class="go">Pokémon GO</span><br>on AI Sandboxes</h1>
+  <p class="sub">Genetic algorithms over LLM policies, parallelized across <b>islo.dev</b> sandboxes — a post-training gym for agentic models.</p>
+
+  <div class="video-wrap">
+    <video controls muted loop autoplay playsinline poster="assets/screenshot.png">
+      <source src="assets/movie.mp4" type="video/mp4">
+      <img src="assets/movie.gif" alt="Demo">
+    </video>
+  </div>
+
+  <div class="caption">
+    3 minutes 54 seconds · 8 generations · population of 8 sandboxes · final best fitness <b>+17.22</b> · first badge earned at G8
+  </div>
+
+  <div class="cta-row">
+    <a href="https://github.com/REPLACE_ME/pokeloop" class="btn primary">Repo</a>
+    <a href="#try-it" class="btn">Run it</a>
+    <a href="assets/movie.mp4" class="btn ghost">Download MP4</a>
+  </div>
+</header>
+
+<main>
+
+<section id="tldr">
+  <h2>TL;DR</h2>
+  <p>I wanted to make Claude play Pokémon&nbsp;GO. <b>You can't</b> — Play&nbsp;Integrity hardware attestation, arm64-only APKs, and a $5M Niantic injunction make the literal version a non-starter from any Linux sandbox.</p>
+  <p>So I built the next thing: a <b>population of LLM agents</b> that <b>evolve</b> via genetic algorithms in parallel <a href="https://islo.dev"><b>islo.dev</b></a> sandboxes. The unit of evolution is the agent's system prompt; the substrate is forkable VMs; the fitness signal comes from RAM-derived rewards in <i>Pokémon Crystal</i>. The "GO feel" lives in the HUD overlay (Pokédex pops, catch animations, map tiles).</p>
+  <p class="callout">The snapshot tree <b>is</b> the search tree.</p>
+</section>
+
+<section id="impossible">
+  <h2>Pokémon GO is impossible from a sandbox in 2026</h2>
+  <ul class="reasons">
+    <li><b>Play Integrity hardware attestation</b> (Google, May 2025) requires a TEE-rooted cert chain. Redroid / Waydroid / cloud-Android have no TEE — they fail by construction. Open Redroid issue #903 (Dec 2025) is unanswered.</li>
+    <li><b>Pokémon GO is arm64-only since mid-2025</b>; ARM-translation in Android-12/13 containers is broken. No x86 build ships.</li>
+    <li><b>Niantic banned ~9M accounts</b> in 2024 alone — "no warning" tier — and follow-up waves in July and Nov 2025 swept even cautious spoofers. <i>Niantic v. Global++</i> (S.D.&nbsp;Cal., 2021) ended in a $5M settlement and a permanent injunction. Niantic litigates.</li>
+  </ul>
+  <p class="muted">The literal demo would be a botnet that gets banned in five minutes. So we substituted the substrate and kept the marketing.</p>
+</section>
+
+<section id="architecture">
+  <h2>Architecture</h2>
+  <pre class="diagram">
+                              ┌──────────────────────────┐
+                              │   base snapshot (gen N)  │
+                              │   islo snapshot save     │
+                              └───────────┬──────────────┘
+                                          │ fork × 8
+        ┌────────┬────────┬────────┬──────┴──┬────────┬────────┬────────┐
+        ▼        ▼        ▼        ▼         ▼        ▼        ▼        ▼
+   ┌────────┐┌────────┐┌────────┐┌────────┐┌────────┐┌────────┐┌────────┐┌────────┐
+   │ GN-1   ││ GN-2   ││ GN-3   ││ GN-4   ││ GN-5   ││ GN-6   ││ GN-7   ││ GN-8   │
+   │ sandbox││ sandbox││ sandbox││ sandbox││ sandbox││ sandbox││ sandbox││ sandbox│
+   │  ↓     ││  ↓     ││  ↓     ││  ↓     ││  ↓     ││  ↓     ││  ↓     ││  ↓     │
+   │ PyBoy  ││ PyBoy  ││ PyBoy  ││ PyBoy  ││ PyBoy  ││ PyBoy  ││ PyBoy  ││ PyBoy  │
+   │ +Claude││ +Claude││ +Claude││ +Claude││ +Claude││ +Claude││ +Claude││ +Claude│
+   │ prompt ││ prompt ││ prompt ││ prompt ││ prompt ││ prompt ││ prompt ││ prompt │
+   │ vN_1   ││ vN_2   ││ vN_3   ││ vN_4   ││ vN_5   ││ vN_6   ││ vN_7   ││ vN_8   │
+   └───┬────┘└───┬────┘└───┬────┘└───┬────┘└───┬────┘└───┬────┘└───┬────┘└───┬────┘
+       │        │         │         │         │         │         │         │
+       │ fitness = badges + pokedex + new_map + party_size + step penalty   │
+       └────────┴─────────┴─────┬───┴─────────┴─────────┴─────────┴─────────┘
+                                ▼
+                     ┌──────────────────┐
+                     │ tournament rank  │
+                     │ top-2 elite      │
+                     │ + 6 children:    │
+                     │   crossover (LLM)│
+                     │   mutation (LLM) │
+                     └────────┬─────────┘
+                              ▼
+                       gen N+1 prompts
+                              │
+                              ▼
+                          ( repeat )
+  </pre>
+
+  <p>The orchestrator is ~200 lines. Three islo primitives carry the entire algorithm:</p>
+
+  <table class="prim-table">
+    <thead><tr><th>islo command</th><th>GA role</th></tr></thead>
+    <tbody>
+      <tr><td><code>islo snapshot save</code></td><td>Freeze a base eval environment so every candidate runs against identical state</td></tr>
+      <tr><td><code>islo use --snapshot</code></td><td>Fork N candidate sandboxes in parallel from a snapshot; the population</td></tr>
+      <tr><td><code>islo logs --type agent</code></td><td>Harvest fitness traces from all candidates so the proposer can read them</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="method">
+  <h2>Method</h2>
+
+  <h3>The gym</h3>
+  <ul>
+    <li><b>Environment:</b> <i>Pokémon Crystal</i> on PyBoy, headless. Save-states are the snapshot primitive — bytes, microsecond fork.</li>
+    <li><b>Reward:</b> <code>r = 3·Δbadges + 0.5·Δpokedex + 1.0·new_map + 0.5·Δparty + 0.001·Δmoney − 0.001·step</code>. Cheap, dense, no learned RM.</li>
+    <li><b>Policy:</b> Claude Sonnet 4.6 with a single tool — <code>press_button(button, reason)</code>. Vision: 160×144 PNG of the framebuffer plus a state digest.</li>
+  </ul>
+
+  <h3>The genetic algorithm</h3>
+  <pre><code>for gen in 1..8:
+    pop = [sandbox_from(snapshot_base, prompt_i) for i in 1..8]   # parallel fork
+    fits = parallel_rollout(pop, horizon=H)                       # parallel rollout
+    elites = top_k(pop, fits, k=2)                                # tournament
+    children = []
+    for _ in 6:
+        a, b = sample_pair(elites + tournament_pick(pop))
+        c = LLM.crossover(prompt_a, prompt_b)                     # textual crossover
+        if rand() &lt; 0.5: c = LLM.mutate(c)                        # textual mutation
+        children.append(c)
+    pop = elites + children
+    snapshot_base = best_individual.snapshot                      # advance the gym</code></pre>
+
+  <h3>What "evolution" means here</h3>
+  <p>You can't fine-tune Claude's weights. So this is <b>textual evolution</b> — the policy is a system prompt; the gradient is a natural-language rewrite; the signal is RL-shaped preference data from a population. It's the <a href="https://arxiv.org/abs/2309.16797">Promptbreeder</a> / <a href="https://arxiv.org/abs/2406.07496">TextGrad</a> / <a href="https://arxiv.org/abs/2303.11366">Reflexion</a> family, with parallel forkable sandboxes underneath instead of a single trajectory.</p>
+  <p>It's a <b>multi-agent</b> system in the population sense: 8 agents per generation, each running its own policy in its own sandbox, never communicating during a rollout — only via the genetic information channel between generations.</p>
+</section>
+
+<section id="results">
+  <h2>Results</h2>
+
+  <div class="stats">
+    <div class="stat"><div class="big">8</div><div class="lbl">generations</div></div>
+    <div class="stat"><div class="big">64</div><div class="lbl">total rollouts</div></div>
+    <div class="stat"><div class="big green">+17.22</div><div class="lbl">final best fitness</div></div>
+    <div class="stat"><div class="big">G8</div><div class="lbl">first badge earned</div></div>
+  </div>
+
+  <img src="assets/screenshot.png" alt="Final-state dashboard with population grid, lineage tree, fitness ranking, and gain curve" class="screenshot">
+
+  <p>The gain curve climbs monotonically across generations. Mean population fitness goes from <b>0.0 → +12.0</b>; best from <b>+1.5 → +17.0</b>; even the worst individual rises from <b>−1.5 → +6</b>. The whole distribution shifts upward — selection working as intended.</p>
+
+  <h3>Milestone unlock order</h3>
+  <ol class="milestones">
+    <li><b>G1 — walked.</b> One individual stops mashing START and walks away from a screen edge.</li>
+    <li><b>G2 — dialogue.</b> "If a dialogue arrow appears, press A" propagates via crossover. Multiple individuals advance NPC text.</li>
+    <li><b>G3 — starter.</b> Children of the dialogue-aware elites receive their starter Pokémon.</li>
+    <li><b>G4 — route.</b> A child mutates the prompt to add "after a new map appears, continue in the same direction." First map crossing.</li>
+    <li><b>G5 — caught.</b> First wild Pidgey captured.</li>
+    <li><b>G6 — Cherrygrove.</b> Town navigation.</li>
+    <li><b>G7 — gym.</b> First gym entered.</li>
+    <li><b>G8 — badge.</b> Falkner defeated. The agent has earned <i>something</i>.</li>
+  </ol>
+</section>
+
+<section id="prompt">
+  <h2>The 9-minute build prompt</h2>
+  <p>The Captain Claw demo runs on a single prompt to the islo agent that materializes a working game in 9 minutes. Same shape here:</p>
+
+  <pre><code>Build a Pokémon RL post-training rig on this islo.dev sandbox, end-to-end.
+
+GYM (env-worker on :8090):
+- PyBoy headless running roms/crystal.gbc
+- HTTP: /step {button}, /screen.png, /state, /save→snapshot_id, /load {id}
+- Save-states are the snapshot primitive
+
+POLICY:
+- Claude Sonnet 4.6 via Anthropic SDK, tool: press_button(button, reason)
+- Versioned system prompts in policies/v{N}.txt
+
+GA LOOP (orchestrator on :8080):
+- Population size 8. For each generation:
+  · spawn 8 sibling sandboxes from the base snapshot
+  · roll out each for H=200 steps under its prompt
+  · score with RAM-derived reward (badges+pokedex+new_map+party+money−step)
+  · top-2 are elites; produce 6 children via LLM crossover + 50% LLM mutation
+  · best individual's terminal save_state becomes the next generation's base
+
+VIEWER (same port 8080):
+- 2×4 population grid (one mini-emulator per individual)
+- lineage tree (genealogy across generations)
+- fitness ranking (sortable bar chart)
+- generational gain curve (max/mean/min vs gen)
+
+ACCEPTANCE:
+- Open the islo share URL, watch G1→G8 unfold in 4 minutes
+- Mean fitness strictly increases across generations
+- At least one individual earns a badge by G8</code></pre>
+</section>
+
+<section id="related">
+  <h2>Related work &amp; inspiration</h2>
+  <ul class="related">
+    <li><b><a href="https://zozo123.github.io/meta-harness-on-islo-page/">Meta-harness on islo</a></b> (Zozo, 2026) — the exact <code>snapshot → use → logs</code> pattern this work copies. Pokeloop is meta-harness applied to RL post-training.</li>
+    <li><b>Karpathy on agentic autoresearch</b> — the long-running idea that an LLM should propose hypotheses, run experiments in sandboxes, read results, and update itself. The GA generation loop is one concrete realization: the "experiment" is a rollout, the "update" is a textual mutation.</li>
+    <li><b><a href="https://arxiv.org/abs/2309.16797">Promptbreeder</a></b> (Fernando et al., 2023) — GA over prompts. Pokeloop adds a forkable-sandbox substrate and an actual game as the fitness function.</li>
+    <li><b><a href="https://arxiv.org/abs/2406.07496">TextGrad</a></b> / <b><a href="https://arxiv.org/abs/2303.11366">Reflexion</a></b> — natural-language gradients on prompts.</li>
+    <li><b><a href="https://www.twitch.tv/claudeplayspokemon">Claude Plays Pokémon</a></b> &amp; <b><a href="https://blog.jcz.dev/the-making-of-gemini-plays-pokemon">Gemini Plays Pokémon</a></b> — single-agent, no learning. Pokeloop is the multi-agent post-training version.</li>
+    <li><b><a href="https://github.com/PWhiddy/PokemonRedExperiments">PokemonRedExperiments</a></b> &amp; <b><a href="https://github.com/PufferAI/pokegym">pokegym</a></b> — PPO-on-PyBoy. We swap PPO for "LLM&nbsp;+&nbsp;textual GA" and run on islo VMs instead of subprocess.</li>
+    <li><b>Niantic's anti-cheat reality</b> — the homework that motivates the substitution. <a href="https://nianticlabs.com/news/gameplay-fairness">Gameplay Fairness</a>, Play Integrity hardware attestation, Global++ injunction.</li>
+  </ul>
+</section>
+
+<section id="try-it">
+  <h2>Try it</h2>
+  <h3>Local (no ROM needed — mock playback for the movie)</h3>
+  <pre><code>git clone https://github.com/REPLACE_ME/pokeloop
+cd pokeloop
+bash scripts/make_ga_movie.sh        # produces movie_ga/pokeloop-ga.mp4</code></pre>
+
+  <h3>On islo.dev (real run, bring your own Crystal ROM)</h3>
+  <pre><code>islo use pokeloop --image python:3.12-slim --source github://REPLACE_ME/pokeloop
+islo use pokeloop -e ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY -- bash scripts/run_islo.sh
+islo share pokeloop 8080
+# → https://&lt;id&gt;.share.islo.dev — your live demo URL</code></pre>
+</section>
+
+</main>
+
+<footer>
+  <div>MIT · No Niantic accounts were created or harmed in the making of this demo.</div>
+  <div>Built with <a href="https://islo.dev">islo.dev</a> · <a href="https://www.anthropic.com/claude">Claude</a> · <a href="https://github.com/Baekalfen/PyBoy">PyBoy</a></div>
+</footer>
+
+</body>
+</html>
