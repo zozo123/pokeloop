@@ -6,7 +6,7 @@
 > [islo.dev](https://islo.dev) sandboxes, learning to earn its first Pokémon badge
 > in 8 generations.
 
-🌐 **[Read the page](https://zozo123.github.io/pokeloop/)** · ▶ **[Live on islo.dev](https://c5rlskovwh8b866l11btak66i.share.islo.dev/)** · 📺 **[Watch the movie](docs/assets/movie.mp4)** · 🧬 **[Run it](#run-it)**
+🌐 **[Read the page](https://zozo123.github.io/pokeloop/)** · 📺 **[Watch the movie](docs/assets/movie.mp4)** · 🧬 **[Run it](#run-it)**
 
 ![dashboard](docs/assets/screenshot.png)
 

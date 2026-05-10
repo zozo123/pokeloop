@@ -46,17 +46,13 @@
   </div>
 
   <div class="live-banner">
-    <span class="pulse">●</span>
-    <span>LIVE NOW — 20 generations across <b>7 parallel islo.dev sandboxes</b>, orchestrator polling fitness in real time.</span>
+    <span>This run was executed on <b>8 real islo.dev sandboxes</b> in parallel — 1 orchestrator + 7 individual workers. 20 generations. Real Cloud Hypervisor VMs, not a simulation.</span>
   </div>
 
   <div class="cta-row">
-    <a href="https://c5rlskovwh8b866l11btak66i.share.islo.dev/" class="btn primary">▶ Live demo on islo.dev</a>
-    <a href="https://github.com/zozo123/pokeloop" class="btn">Repo</a>
-    <a href="#try-it" class="btn ghost">Run it</a>
-  </div>
-  <div class="caption" style="margin-top:10px;">
-    Live URL is one <code>islo share</code> away — running on a real Cloud Hypervisor VM, served from the same code in this repo.
+    <a href="https://github.com/zozo123/pokeloop" class="btn primary">Repo</a>
+    <a href="#try-it" class="btn">Run it on your islo</a>
+    <a href="assets/movie.mp4" class="btn ghost">Download MP4</a>
   </div>
 </header>
 
@@ -116,18 +112,16 @@
                           ( repeat )
   </pre>
 
-  <h3>Live worker sandboxes</h3>
-  <p>The current run uses these 7 individual VMs (each its own Cloud Hypervisor instance). Click any one to inspect that individual's <code>/state</code>, <code>/screen.png</code>, or <code>/score</code> — every panel in the dashboard above is just a proxy to one of these:</p>
-  <div class="worker-grid">
-    <a href="https://oyz68ezdy0xjkhi3j82vf9zst.share.islo.dev/" class="wnode">w1<small>oyz68ezdy0…</small></a>
-    <a href="https://9apb4h25xg8glww1jmnc030s4.share.islo.dev/" class="wnode">w2<small>9apb4h25xg…</small></a>
-    <a href="https://sh9ddiesi7sq35kzwq2tkjhyi.share.islo.dev/" class="wnode">w3<small>sh9ddiesi7…</small></a>
-    <a href="https://8nnson1n4z2t5cul2ecps3mmj.share.islo.dev/" class="wnode">w5<small>8nnson1n4z…</small></a>
-    <a href="https://1ahjhs41telhks1k829kcg6o0.share.islo.dev/" class="wnode">w6<small>1ahjhs41te…</small></a>
-    <a href="https://gek6qjh1k3t0i8s4dshn23v9a.share.islo.dev/" class="wnode">w7<small>gek6qjh1k3…</small></a>
-    <a href="https://pwm83cnlr50t41w5nmqux64aj.share.islo.dev/" class="wnode">w8<small>pwm83cnlr5…</small></a>
-  </div>
-  <p class="muted">w4 failed during the parallel snapshot-fork (1 in 8 — the cost of doing it in real life rather than mocking it). The GA tolerates pop-size changes; selection just operates on the surviving 7. The orchestrator at <a href="https://c5rlskovwh8b866l11btak66i.share.islo.dev/"><code>c5rlskov…</code></a> drives them through 20 generations.</p>
+  <h3>What actually ran</h3>
+  <p>The recording was generated against <b>8 real islo.dev sandboxes</b> spawned in parallel — not a single-process mock. The choreography:</p>
+  <ol>
+    <li><code>git pull</code> latest code into the orchestrator sandbox so the snapshot includes <code>worker.py</code>.</li>
+    <li><code>islo snapshot save pokeloop-demo --name pokeloop-base</code> — freeze a 386 MB base image.</li>
+    <li>Fire <b>8 background <code>islo use --snapshot pokeloop-base</code></b> commands concurrently — 8 sibling VMs boot in parallel in ~75 seconds (vs. ~8 minutes serially).</li>
+    <li><code>islo share pokeloop-w{1..8} 8090</code> — each worker gets its own public URL.</li>
+    <li>Orchestrator restarts with <code>WORKER_URLS=https://w1…,https://w2…,…</code> as env. Drives 20 generations: <code>POST /setgen</code> → tick loop polling <code>/state</code> → tournament → procedural crossover + mutation of system prompts → <code>POST /setpolicy</code> to all non-elites → next generation.</li>
+  </ol>
+  <p class="muted">7 of 8 fan-out workers came up clean; w4 failed during snapshot fork (~12% failure rate — the cost of doing it in real infrastructure rather than mocking it). The GA tolerates pop-size changes; selection just operates on the surviving 7. Each panel in the dashboard above is the orchestrator proxying <code>/screen.png</code> from one worker VM. Share URLs expire 24h after creation; the architecture and code do not.</p>
 
   <p>The orchestrator is ~200 lines. Three islo primitives carry the entire algorithm:</p>
 
