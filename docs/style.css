@@ -103,6 +103,41 @@ nav {
   display: flex; gap: 12px; justify-content: center;
   margin-top: 32px; flex-wrap: wrap;
 }
+
+.live-banner {
+  margin-top: 24px;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 8px 16px;
+  background: rgba(74, 222, 128, .12);
+  border: 1px solid var(--green);
+  border-radius: 8px;
+  font-size: 13px; color: var(--green); font-weight: 600;
+}
+.live-banner .pulse { animation: pulse 1.4s infinite; font-size: 12px; }
+.live-banner b { color: white; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+.worker-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px; margin: 14px 0;
+}
+.wnode {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 6px; padding: 10px 12px;
+  font-family: 'Menlo', monospace; font-size: 12px; font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  display: flex; flex-direction: column; gap: 2px;
+  transition: border-color .15s, transform .15s;
+}
+.wnode:hover {
+  border-color: var(--accent); transform: translateY(-1px);
+  text-decoration: none;
+}
+.wnode small {
+  font-size: 9px; color: var(--dim); font-weight: 500;
+  letter-spacing: .04em;
+}
 .btn {
   display: inline-block;
   padding: 10px 20px; border-radius: 8px;

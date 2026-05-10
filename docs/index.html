@@ -45,6 +45,11 @@
     3 minutes 54 seconds · 8 generations · population of 8 sandboxes · final best fitness <b>+17.22</b> · first badge earned at G8
   </div>
 
+  <div class="live-banner">
+    <span class="pulse">●</span>
+    <span>LIVE NOW — 20 generations across <b>7 parallel islo.dev sandboxes</b>, orchestrator polling fitness in real time.</span>
+  </div>
+
   <div class="cta-row">
     <a href="https://c5rlskovwh8b866l11btak66i.share.islo.dev/" class="btn primary">▶ Live demo on islo.dev</a>
     <a href="https://github.com/zozo123/pokeloop" class="btn">Repo</a>
@@ -110,6 +115,19 @@
                               ▼
                           ( repeat )
   </pre>
+
+  <h3>Live worker sandboxes</h3>
+  <p>The current run uses these 7 individual VMs (each its own Cloud Hypervisor instance). Click any one to inspect that individual's <code>/state</code>, <code>/screen.png</code>, or <code>/score</code> — every panel in the dashboard above is just a proxy to one of these:</p>
+  <div class="worker-grid">
+    <a href="https://oyz68ezdy0xjkhi3j82vf9zst.share.islo.dev/" class="wnode">w1<small>oyz68ezdy0…</small></a>
+    <a href="https://9apb4h25xg8glww1jmnc030s4.share.islo.dev/" class="wnode">w2<small>9apb4h25xg…</small></a>
+    <a href="https://sh9ddiesi7sq35kzwq2tkjhyi.share.islo.dev/" class="wnode">w3<small>sh9ddiesi7…</small></a>
+    <a href="https://8nnson1n4z2t5cul2ecps3mmj.share.islo.dev/" class="wnode">w5<small>8nnson1n4z…</small></a>
+    <a href="https://1ahjhs41telhks1k829kcg6o0.share.islo.dev/" class="wnode">w6<small>1ahjhs41te…</small></a>
+    <a href="https://gek6qjh1k3t0i8s4dshn23v9a.share.islo.dev/" class="wnode">w7<small>gek6qjh1k3…</small></a>
+    <a href="https://pwm83cnlr50t41w5nmqux64aj.share.islo.dev/" class="wnode">w8<small>pwm83cnlr5…</small></a>
+  </div>
+  <p class="muted">w4 failed during the parallel snapshot-fork (1 in 8 — the cost of doing it in real life rather than mocking it). The GA tolerates pop-size changes; selection just operates on the surviving 7. The orchestrator at <a href="https://c5rlskovwh8b866l11btak66i.share.islo.dev/"><code>c5rlskov…</code></a> drives them through 20 generations.</p>
 
   <p>The orchestrator is ~200 lines. Three islo primitives carry the entire algorithm:</p>
 
