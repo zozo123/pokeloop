@@ -6,7 +6,7 @@
 > [islo.dev](https://islo.dev) sandboxes, learning to earn its first Pokémon badge
 > in 8 generations.
 
-🌐 **[Read the page](https://REPLACE_ME.github.io/pokeloop/)** · 📺 **[Watch the movie](docs/assets/movie.mp4)** · 🧬 **[Run it](#run-it)**
+🌐 **[Read the page](https://zozo123.github.io/pokeloop/)** · 📺 **[Watch the movie](docs/assets/movie.mp4)** · 🧬 **[Run it](#run-it)**
 
 ![dashboard](docs/assets/screenshot.png)
 
@@ -98,7 +98,7 @@ pokeloop/
 ### Just make the movie (no ROM, no API key, ~3 minutes)
 
 ```bash
-git clone https://github.com/REPLACE_ME/pokeloop
+git clone https://github.com/zozo123/pokeloop
 cd pokeloop
 SECONDS_RUN=230 bash scripts/make_ga_movie.sh
 open movie_ga/pokeloop-ga.mp4
@@ -110,7 +110,7 @@ open movie_ga/pokeloop-ga.mp4
 export ANTHROPIC_API_KEY=sk-ant-...
 cp /your/legal/copy/crystal.gbc roms/crystal.gbc
 
-islo use pokeloop --image python:3.12-slim --source github://REPLACE_ME/pokeloop
+islo use pokeloop --image python:3.12-slim --source github://zozo123/pokeloop
 islo use pokeloop -e ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY -- bash scripts/run_islo.sh
 islo share pokeloop 8080
 # → https://<id>.share.islo.dev — your live demo URL
