@@ -1,7 +1,7 @@
 [project]
 name = "pokeloop"
 version = "0.1.0"
-description = "AI plays Pokémon and DPOs itself, on a forkable VM"
+description = "Demo: evolving LLM prompts across parallel islo.dev sandboxes with a Pokémon Crystal-style viewer; published results are a scripted playback"
 requires-python = ">=3.11"
 dependencies = [
   "anthropic>=0.40",
