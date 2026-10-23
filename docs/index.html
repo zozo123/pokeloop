@@ -1,16 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pokeloop — How AI Learns to Play Pokémon GO on Sandboxes</title>
-  <meta name="description" content="A population of LLM agents evolves via genetic algorithms in parallel islo.dev sandboxes — and learns to earn its first Pokémon badge in 8 generations.">
-  <meta property="og:title" content="How AI Learns to Play Pokémon GO on Sandboxes">
-  <meta property="og:description" content="Genetic algorithms over LLM policies, on parallel forkable VMs.">
-  <meta property="og:image" content="assets/screenshot.png">
+  <title>Pokeloop: prompt-evolution sandbox demo · Yossi Eliaz</title>
+  <meta name="description" content="Demo by Yossi Eliaz: a genetic-algorithm loop over LLM system prompts on parallel islo.dev sandboxes. The results shown are a scripted playback.">
+  <meta name="author" content="Yossi Eliaz">
+  <link rel="canonical" href="https://zozo123.github.io/pokeloop/">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Yossi Eliaz">
+  <meta property="og:title" content="Pokeloop: prompt-evolution sandbox demo">
+  <meta property="og:description" content="Demo by Yossi Eliaz: a genetic-algorithm loop over LLM system prompts on parallel islo.dev sandboxes. The results shown are a scripted playback.">
+  <meta property="og:url" content="https://zozo123.github.io/pokeloop/">
+  <meta property="og:image" content="https://zozo123.github.io/pokeloop/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Pokeloop: prompt-evolution sandbox demo, by Yossi Eliaz. Scripted demo.">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pokeloop: prompt-evolution sandbox demo">
+  <meta name="twitter:description" content="A genetic-algorithm loop over LLM system prompts on parallel islo.dev sandboxes. The results shown are a scripted playback.">
+  <meta name="twitter:image" content="https://zozo123.github.io/pokeloop/assets/og.png">
   <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": "Pokeloop",
+    "headline": "Pokeloop: prompt-evolution sandbox demo",
+    "description": "Demo of a genetic-algorithm loop over LLM system prompts across parallel islo.dev sandboxes, with a Pokémon Crystal-style viewer. Published results are a scripted playback.",
+    "url": "https://zozo123.github.io/pokeloop/",
+    "codeRepository": "https://github.com/zozo123/pokeloop",
+    "programmingLanguage": "Python",
+    "license": "https://opensource.org/licenses/MIT",
+    "datePublished": "2026-05-10",
+    "image": "https://zozo123.github.io/pokeloop/assets/og.png",
+    "author": {
+      "@type": "Person",
+      "name": "Yossi Eliaz",
+      "url": "https://yossieliaz.netlify.app/",
+      "sameAs": ["https://github.com/zozo123", "https://www.linkedin.com/in/yossi-eliaz/"]
+    }
+  }
+  </script>
 </head>
 <body>
 
@@ -31,22 +62,24 @@
 </nav>
 
 <header class="hero">
-  <h1>How AI Learns to Play <span class="go">Pokémon GO</span><br>on AI Sandboxes</h1>
-  <p class="sub">Genetic algorithms over LLM policies, parallelized across <b>islo.dev</b> sandboxes — a post-training gym for agentic models.</p>
+  <h1>Pokeloop: evolving <span class="go">LLM prompts</span> across parallel sandboxes</h1>
+  <p class="sub">A genetic-algorithm loop over LLM system prompts, designed to fan out across parallel <b>islo.dev</b> sandboxes. A demo with a Pokémon Crystal-style viewer; results are scripted playback.</p>
+  <p class="byline">By <a href="https://zozo123.github.io/">Yossi Eliaz</a> · May 2026 · Demo</p>
 
   <div class="video-wrap">
     <video controls muted loop autoplay playsinline poster="assets/screenshot.png">
       <source src="assets/movie.mp4" type="video/mp4">
-      <img src="assets/movie.gif" alt="Demo">
+      <img src="assets/movie.gif" alt="Scripted playback of the GA viewer">
     </video>
   </div>
 
   <div class="caption">
-    3 minutes 54 seconds · 8 generations · population of 8 sandboxes · final best fitness <b>+17.22</b> · first badge earned at G8
+    <b>Scripted playback (mock_ga.py):</b> fitness values and milestones are predefined to demonstrate the viewer; no agent was trained.<br>
+    3 min 54 s · 8 generations · population of 8 · scripted final best fitness +17.22 · scripted badge at G8
   </div>
 
   <div class="live-banner">
-    <span>This run was executed on <b>8 real islo.dev sandboxes</b> in parallel — 1 orchestrator + 7 individual workers. 20 generations. Real Cloud Hypervisor VMs, not a simulation.</span>
+    <span>Separately, the fan-out was run on <b>real islo.dev VMs</b>: 8 workers forked from one snapshot (7 came up). In that run, game frames, fitness, and prompt crossover were procedural stand-ins (<code>worker.py</code>, <code>orchestrator_real.py</code>), not PyBoy or Claude. The movie above is the scripted <code>mock_ga.py</code> playback.</span>
   </div>
 
   <div class="cta-row">
@@ -61,7 +94,8 @@
 <section id="tldr">
   <h2>TL;DR</h2>
   <p>I wanted to make Claude play Pokémon&nbsp;GO. <b>You can't</b> — Play&nbsp;Integrity hardware attestation, arm64-only APKs, and a $5M Niantic injunction make the literal version a non-starter from any Linux sandbox.</p>
-  <p>So I built the next thing: a <b>population of LLM agents</b> that <b>evolve</b> via genetic algorithms in parallel <a href="https://islo.dev"><b>islo.dev</b></a> sandboxes. The unit of evolution is the agent's system prompt; the substrate is forkable VMs; the fitness signal comes from RAM-derived rewards in <i>Pokémon Crystal</i>. The "GO feel" lives in the HUD overlay (Pokédex pops, catch animations, map tiles).</p>
+  <p>So I built a demo of the next thing: a <b>population of LLM agents</b> whose system prompts <b>evolve</b> via a genetic algorithm across parallel <a href="https://islo.dev"><b>islo.dev</b></a> sandboxes. The unit of evolution is the agent's system prompt; the substrate is forkable VMs; the designed fitness signal is RAM-derived rewards in <i>Pokémon Crystal</i> (<code>reward.py</code>). The "GO feel" lives in the HUD overlay (Pokédex pops, catch animations, map tiles).</p>
+  <p>The movie and numbers on this page are a <b>scripted playback</b> (<code>mock_ga.py</code>) of that loop; no agent was trained.</p>
   <p class="callout">The snapshot tree <b>is</b> the search tree.</p>
 </section>
 
@@ -72,11 +106,12 @@
     <li><b>Pokémon GO is arm64-only since mid-2025</b>; ARM-translation in Android-12/13 containers is broken. No x86 build ships.</li>
     <li><b>Niantic banned ~9M accounts</b> in 2024 alone — "no warning" tier — and follow-up waves in July and Nov 2025 swept even cautious spoofers. <i>Niantic v. Global++</i> (S.D.&nbsp;Cal., 2021) ended in a $5M settlement and a permanent injunction. Niantic litigates.</li>
   </ul>
-  <p class="muted">The literal demo would be a botnet that gets banned in five minutes. So we substituted the substrate and kept the marketing.</p>
+  <p class="muted">The literal demo would be a botnet that gets banned in five minutes.</p>
 </section>
 
 <section id="architecture">
   <h2>Architecture</h2>
+  <p class="diagram-caption">Target design (not what produced the movie)</p>
   <pre class="diagram">
                               ┌──────────────────────────┐
                               │   base snapshot (gen N)  │
@@ -113,7 +148,7 @@
   </pre>
 
   <h3>What actually ran</h3>
-  <p>The recording was generated against <b>8 real islo.dev sandboxes</b> spawned in parallel — not a single-process mock. The choreography:</p>
+  <p>The movie above is the scripted <code>mock_ga.py</code> playback, a single process. Separately, in a single run on 2026-05-10, the GA fan-out was run against <b>real islo.dev sandboxes</b> spawned in parallel. In that run, game frames, fitness, and prompt crossover were procedural stand-ins (<code>worker.py</code>, <code>orchestrator_real.py</code>), not PyBoy or Claude. The choreography:</p>
   <ol>
     <li><code>git pull</code> latest code into the orchestrator sandbox so the snapshot includes <code>worker.py</code>.</li>
     <li><code>islo snapshot save pokeloop-demo --name pokeloop-base</code> — freeze a 386 MB base image.</li>
@@ -121,9 +156,9 @@
     <li><code>islo share pokeloop-w{1..8} 8090</code> — each worker gets its own public URL.</li>
     <li>Orchestrator restarts with <code>WORKER_URLS=https://w1…,https://w2…,…</code> as env. Drives 20 generations: <code>POST /setgen</code> → tick loop polling <code>/state</code> → tournament → procedural crossover + mutation of system prompts → <code>POST /setpolicy</code> to all non-elites → next generation.</li>
   </ol>
-  <p class="muted">7 of 8 fan-out workers came up clean; w4 failed during snapshot fork (~12% failure rate — the cost of doing it in real infrastructure rather than mocking it). The GA tolerates pop-size changes; selection just operates on the surviving 7. Each panel in the dashboard above is the orchestrator proxying <code>/screen.png</code> from one worker VM. Share URLs expire 24h after creation; the architecture and code do not.</p>
+  <p class="muted">7 of 8 fan-out workers came up clean; w4 failed during snapshot fork in that run. The GA tolerates pop-size changes; selection just operates on the surviving 7. In that run, each dashboard panel was the orchestrator proxying <code>/screen.png</code> from one worker VM. Share URLs expire 24h after creation; the architecture and code do not.</p>
 
-  <p>The orchestrator is ~200 lines. Three islo primitives carry the entire algorithm:</p>
+  <p>In the target design, three islo primitives carry the algorithm:</p>
 
   <table class="prim-table">
     <thead><tr><th>islo command</th><th>GA role</th></tr></thead>
@@ -137,6 +172,7 @@
 
 <section id="method">
   <h2>Method</h2>
+  <p class="muted">This section describes the target design. The published movie and results come from the scripted playback, not from this loop.</p>
 
   <h3>The gym</h3>
   <ul>
@@ -165,20 +201,22 @@
 </section>
 
 <section id="results">
-  <h2>Results</h2>
+  <h2>Results (scripted playback)</h2>
+
+  <p class="callout scripted"><b>Scripted playback (mock_ga.py):</b> fitness values and milestones are predefined to demonstrate the viewer; no agent was trained.</p>
 
   <div class="stats">
-    <div class="stat"><div class="big">8</div><div class="lbl">generations</div></div>
-    <div class="stat"><div class="big">64</div><div class="lbl">total rollouts</div></div>
-    <div class="stat"><div class="big green">+17.22</div><div class="lbl">final best fitness</div></div>
-    <div class="stat"><div class="big">G8</div><div class="lbl">first badge earned</div></div>
+    <div class="stat"><div class="big">8</div><div class="lbl">scripted generations</div></div>
+    <div class="stat"><div class="big">64</div><div class="lbl">scripted rollouts</div></div>
+    <div class="stat"><div class="big green">+17.22</div><div class="lbl">scripted best fitness</div></div>
+    <div class="stat"><div class="big">G8</div><div class="lbl">scripted badge</div></div>
   </div>
 
-  <img src="assets/screenshot.png" alt="Final-state dashboard with population grid, lineage tree, fitness ranking, and gain curve" class="screenshot">
+  <img src="assets/screenshot.png" alt="Final-state dashboard of the scripted playback, with population grid, lineage tree, fitness ranking, and gain curve" class="screenshot">
 
-  <p>The gain curve climbs monotonically across generations. Mean population fitness goes from <b>0.0 → +12.0</b>; best from <b>+1.5 → +17.0</b>; even the worst individual rises from <b>−1.5 → +6</b>. The whole distribution shifts upward — selection working as intended.</p>
+  <p>The script (<code>GEN_SCRIPT</code> in <code>mock_ga.py</code>) makes the gain curve climb monotonically across generations: mean population fitness goes from <b>0.0 → +12.0</b>, best from <b>+1.5 → +17.0</b>, and the worst individual from <b>−1.5 → +6</b>. This shows what the viewer displays when selection works; it is not evidence that it does.</p>
 
-  <h3>Milestone unlock order</h3>
+  <h3>Scripted milestone order</h3>
   <ol class="milestones">
     <li><b>G1 — walked.</b> One individual stops mashing START and walks away from a screen edge.</li>
     <li><b>G2 — dialogue.</b> "If a dialogue arrow appears, press A" propagates via crossover. Multiple individuals advance NPC text.</li>
@@ -187,13 +225,13 @@
     <li><b>G5 — caught.</b> First wild Pidgey captured.</li>
     <li><b>G6 — Cherrygrove.</b> Town navigation.</li>
     <li><b>G7 — gym.</b> First gym entered.</li>
-    <li><b>G8 — badge.</b> Falkner defeated. The agent has earned <i>something</i>.</li>
+    <li><b>G8 — badge.</b> Falkner defeated.</li>
   </ol>
 </section>
 
 <section id="prompt">
-  <h2>The 9-minute build prompt</h2>
-  <p>The Captain Claw demo runs on a single prompt to the islo agent that materializes a working game in 9 minutes. Same shape here:</p>
+  <h2>The build prompt</h2>
+  <p>A single prompt to an islo.dev coding agent that describes the whole rig. The GA-shaped version is below; <a href="https://github.com/zozo123/pokeloop/blob/main/prompt.md"><code>prompt.md</code></a> holds the DPO-shaped variant.</p>
 
   <pre><code>Build a Pokémon RL post-training rig on this islo.dev sandbox, end-to-end.
 
@@ -229,24 +267,25 @@ ACCEPTANCE:
 <section id="related">
   <h2>Related work &amp; inspiration</h2>
   <ul class="related">
-    <li><b><a href="https://zozo123.github.io/meta-harness-on-islo-page/">Meta-harness on islo</a></b> (Zozo, 2026) — the exact <code>snapshot → use → logs</code> pattern this work copies. Pokeloop is meta-harness applied to RL post-training.</li>
+    <li><b><a href="https://zozo123.github.io/meta-harness-on-islo-page/">Meta-harness on islo</a></b> (Yossi Eliaz, 2026) — the exact <code>snapshot → use → logs</code> pattern this work copies. Pokeloop is meta-harness applied to RL post-training.</li>
     <li><b>Karpathy on agentic autoresearch</b> — the long-running idea that an LLM should propose hypotheses, run experiments in sandboxes, read results, and update itself. The GA generation loop is one concrete realization: the "experiment" is a rollout, the "update" is a textual mutation.</li>
-    <li><b><a href="https://arxiv.org/abs/2309.16797">Promptbreeder</a></b> (Fernando et al., 2023) — GA over prompts. Pokeloop adds a forkable-sandbox substrate and an actual game as the fitness function.</li>
+    <li><b><a href="https://arxiv.org/abs/2309.16797">Promptbreeder</a></b> (Fernando et al., 2023) — GA over prompts. Pokeloop's design adds a forkable-sandbox substrate and a game as the fitness function.</li>
     <li><b><a href="https://arxiv.org/abs/2406.07496">TextGrad</a></b> / <b><a href="https://arxiv.org/abs/2303.11366">Reflexion</a></b> — natural-language gradients on prompts.</li>
-    <li><b><a href="https://www.twitch.tv/claudeplayspokemon">Claude Plays Pokémon</a></b> &amp; <b><a href="https://blog.jcz.dev/the-making-of-gemini-plays-pokemon">Gemini Plays Pokémon</a></b> — single-agent, no learning. Pokeloop is the multi-agent post-training version.</li>
+    <li><b><a href="https://www.twitch.tv/claudeplayspokemon">Claude Plays Pokémon</a></b> &amp; <b><a href="https://blog.jcz.dev/the-making-of-gemini-plays-pokemon">Gemini Plays Pokémon</a></b> — single-agent, no learning. Pokeloop sketches a multi-agent, population-based variant.</li>
     <li><b><a href="https://github.com/PWhiddy/PokemonRedExperiments">PokemonRedExperiments</a></b> &amp; <b><a href="https://github.com/PufferAI/pokegym">pokegym</a></b> — PPO-on-PyBoy. We swap PPO for "LLM&nbsp;+&nbsp;textual GA" and run on islo VMs instead of subprocess.</li>
-    <li><b>Niantic's anti-cheat reality</b> — the homework that motivates the substitution. <a href="https://nianticlabs.com/news/gameplay-fairness">Gameplay Fairness</a>, Play Integrity hardware attestation, Global++ injunction.</li>
+    <li><b>Niantic's anti-cheat reality</b> — the homework that motivates the substitution. Niantic gameplay-fairness policy, Play Integrity hardware attestation, Global++ injunction.</li>
   </ul>
 </section>
 
 <section id="try-it">
   <h2>Try it</h2>
-  <h3>Local (no ROM needed — mock playback for the movie)</h3>
+  <h3>Local (no ROM, no API key — the scripted GA playback)</h3>
   <pre><code>git clone https://github.com/zozo123/pokeloop
 cd pokeloop
-bash scripts/make_ga_movie.sh        # produces movie_ga/pokeloop-ga.mp4</code></pre>
+pip install fastapi 'uvicorn[standard]' pillow pydantic websockets
+uvicorn mock_ga:app --host 127.0.0.1 --port 8081   # then open http://127.0.0.1:8081/</code></pre>
 
-  <h3>On islo.dev (real run, bring your own Crystal ROM)</h3>
+  <h3>On islo.dev (DPO-style loop with Claude and PyBoy; bring your own Crystal ROM)</h3>
   <pre><code>islo use pokeloop --image python:3.12-slim --source github://zozo123/pokeloop
 islo use pokeloop -e ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY -- bash scripts/run_islo.sh
 islo share pokeloop 8080
@@ -256,7 +295,8 @@ islo share pokeloop 8080
 </main>
 
 <footer>
-  <div>MIT · No Niantic accounts were created or harmed in the making of this demo.</div>
+  <div>MIT · by <a href="https://zozo123.github.io/">Yossi Eliaz</a> · May 2026</div>
+  <div>No Niantic accounts were created or harmed in the making of this demo.</div>
   <div>Built with <a href="https://islo.dev">islo.dev</a> · <a href="https://www.anthropic.com/claude">Claude</a> · <a href="https://github.com/Baekalfen/PyBoy">PyBoy</a></div>
 </footer>
 

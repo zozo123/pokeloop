@@ -1,14 +1,12 @@
-# pokeloop
+# Pokeloop: evolving LLM prompts across parallel sandboxes
 
-> **How AI learns to play Pokémon GO on AI sandboxes.**
->
-> A population of LLM-driven agents evolves via genetic algorithms in parallel
-> [islo.dev](https://islo.dev) sandboxes, learning to earn its first Pokémon badge
-> in 8 generations.
+A demo by Yossi Eliaz of a genetic-algorithm loop over LLM system prompts on parallel
+[islo.dev](https://islo.dev) sandboxes, with a Pokémon Crystal-style viewer. The published
+results are a scripted playback (`mock_ga.py`); no agent was trained.
 
-🌐 **[Read the page](https://zozo123.github.io/pokeloop/)** · 📺 **[Watch the movie](docs/assets/movie.mp4)** · 🧬 **[Run it](#run-it)**
+[Read the page](https://zozo123.github.io/pokeloop/) · [Watch the scripted movie](docs/assets/movie.mp4) · [Run it](#run-it)
 
-![dashboard](docs/assets/screenshot.png)
+![Scripted playback of the GA viewer: population grid, lineage tree, fitness ranking, gain curve](docs/assets/screenshot.png)
 
 ## TL;DR
 
@@ -16,18 +14,21 @@ Pokémon GO can't run honestly from a Linux sandbox in 2026 — Play Integrity h
 attestation, arm64-only APKs, and a $5M Niantic injunction make the literal version
 a ban-on-first-frame botnet.
 
-So we built the next thing: **a population of 8 LLM agents that evolve via genetic
-algorithms in parallel forkable VMs.** The fitness signal comes from RAM-derived rewards
-in *Pokémon Crystal* on PyBoy. The "GO feel" is a HUD overlay (Pokédex pops, catch
-animations). The substrate — `islo snapshot save` → `islo use --snapshot` →
+So this is a demo of the next thing: **a population of 8 LLM agents whose system prompts
+evolve via a genetic algorithm across parallel forkable VMs.** The designed fitness signal
+is RAM-derived rewards in *Pokémon Crystal* on PyBoy (`reward.py`). The "GO feel" is a
+HUD overlay (Pokédex pops, catch animations). The substrate — `islo snapshot save` → `islo use --snapshot` →
 `islo logs --type agent` — is borrowed directly from
 [meta-harness on islo](https://zozo123.github.io/meta-harness-on-islo-page/).
 
 The snapshot tree **is** the search tree.
 
-## Results
+## Results (scripted playback)
 
-| metric | G1 | G8 |
+Scripted playback (`mock_ga.py`): fitness values and milestones are predefined to
+demonstrate the viewer; no agent was trained.
+
+| metric (scripted) | G1 | G8 |
 |---|---|---|
 | best fitness | +1.5 | **+17.0** |
 | mean fitness | 0.0 | **+12.0** |
@@ -48,8 +49,11 @@ for gen in 1..8:
     snapshot_base = best_individual.snapshot                      # advance the gym
 ```
 
-Each individual is a Claude system prompt; each generation runs in 8 islo sandboxes
-in parallel; fitness is a RAM-derived dense signal (badges, pokedex, map progress).
+In the target design, each individual is a Claude system prompt; each generation runs
+in 8 islo sandboxes in parallel; fitness is a RAM-derived dense signal (badges, pokedex,
+map progress). Separately, the fan-out was run once on real islo.dev VMs (8 workers forked
+from one snapshot, 7 came up) with procedural frames, fitness, and crossover
+(`worker.py`, `orchestrator_real.py`), not PyBoy or Claude.
 
 The "evolution" is *textual* — natural-language gradients on prompts, not weight
 updates. It's the
@@ -72,14 +76,17 @@ pokeloop/
 │   └── assets/
 │       ├── movie.mp4
 │       ├── movie.gif
-│       └── screenshot.png
+│       ├── screenshot.png
+│       └── og.svg / og.png  ← share card
 ├── env_worker.py         ← PyBoy HTTP gym (save/load/screen/state)
 ├── policy.py             ← Claude tool-use action policy
 ├── trainer.py            ← textual DPO over preference pairs (DPO version)
 ├── reward.py             ← RAM-derived dense reward
 ├── orchestrator.py       ← real-run loop (DPO version)
 ├── mock_orchestrator.py  ← deterministic mock for the DPO movie
-├── mock_ga.py            ← deterministic mock for the GA movie
+├── mock_ga.py            ← scripted playback for the GA movie
+├── worker.py             ← fan-out worker, procedural frames + fitness
+├── orchestrator_real.py  ← GA over N worker sandboxes, procedural crossover
 ├── frames.py             ← procedural Crystal-ish PIL frame generator
 ├── viewer/               ← single-policy DPO viewer
 ├── viewer_ga/            ← population/generation GA viewer
@@ -95,16 +102,17 @@ pokeloop/
 
 ## Run it
 
-### Just make the movie (no ROM, no API key, ~3 minutes)
+### Scripted GA playback (no ROM, no API key)
 
 ```bash
 git clone https://github.com/zozo123/pokeloop
 cd pokeloop
-SECONDS_RUN=230 bash scripts/make_ga_movie.sh
-open movie_ga/pokeloop-ga.mp4
+pip install fastapi 'uvicorn[standard]' pillow pydantic websockets
+uvicorn mock_ga:app --host 127.0.0.1 --port 8081
+open http://127.0.0.1:8081/
 ```
 
-### Real run on islo.dev (bring your own Crystal ROM)
+### DPO-style loop on islo.dev (Claude + PyBoy; bring your own Crystal ROM)
 
 ```bash
 export ANTHROPIC_API_KEY=sk-ant-...
@@ -116,36 +124,36 @@ islo share pokeloop 8080
 # → https://<id>.share.islo.dev — your live demo URL
 ```
 
-### Real run locally (macOS / Linux)
+### DPO-style loop locally (macOS / Linux)
 
 ```bash
 bash scripts/run_local.sh
 open http://localhost:8080
 ```
 
-## The 9-minute build prompt
+## The build prompt
 
-The whole rig is small enough to materialize from a single prompt — see
-[`prompt.md`](prompt.md) for the Captain-Claw-shape one-shot.
+[`prompt.md`](prompt.md) is a single prompt for an islo.dev coding agent that describes
+the whole rig (DPO-shaped variant).
 
 ## Inspiration
 
-- **[Meta-harness on islo](https://zozo123.github.io/meta-harness-on-islo-page/)** —
+- **[Meta-harness on islo](https://zozo123.github.io/meta-harness-on-islo-page/)** (Yossi Eliaz, 2026) —
   the `snapshot → use → logs` pattern this work copies. Pokeloop is meta-harness
   applied to RL post-training.
 - **Karpathy's agentic autoresearch** — LLMs that propose, run, read, update,
   in sandboxes. The GA loop is one realization.
 - **[Claude Plays Pokémon](https://www.twitch.tv/claudeplayspokemon)** &
   **[Gemini Plays Pokémon](https://blog.jcz.dev/the-making-of-gemini-plays-pokemon)** —
-  single-agent, no learning. This is the multi-agent post-training version.
+  single-agent, no learning. Pokeloop sketches a multi-agent, population-based variant.
 
 ## Caveats
 
 - Bring your own ROM. We never ship one.
 - Anthropic API calls dominate latency (~1–2 actions/sec).
-- The mock movie is a deterministic playback — same viewer code, scripted
-  events, same shape as a real run. Swap `mock_ga.py` for the live `orchestrator.py`
-  for genuine learning.
+- The movie is a scripted playback (`mock_ga.py`). `orchestrator.py` is a separate
+  DPO-style loop with Claude and PyBoy; `orchestrator_real.py` fans the GA out to real
+  sandboxes with procedural fitness. Neither produced the published results.
 - "Pokémon GO" in the title is a frame, not a game. We don't connect to Niantic
   servers and we don't want to.
 

@@ -74,18 +74,25 @@ nav {
   margin: 0 0 16px;
   letter-spacing: -.02em;
   font-weight: 800;
+  text-wrap: balance;
 }
 .hero h1 .go {
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  white-space: nowrap;
 }
 .hero .sub {
   font-size: 19px; color: var(--dim);
-  max-width: 680px; margin: 0 auto 36px;
+  max-width: 680px; margin: 0 auto 12px;
   line-height: 1.55;
 }
+.hero .byline {
+  margin: 0 auto 32px;
+  color: var(--dim); font-size: 14px;
+}
+.hero .byline a { color: var(--fg); font-weight: 600; }
 .video-wrap {
   margin: 0 auto; max-width: 900px;
   border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
@@ -97,7 +104,8 @@ nav {
   margin-top: 14px; color: var(--dim); font-size: 13px;
   font-family: 'Menlo', monospace;
 }
-.caption b { color: var(--green); }
+.caption b { color: var(--accent); }
+.live-banner code { color: white; background: rgba(0, 0, 0, .25); }
 
 .cta-row {
   display: flex; gap: 12px; justify-content: center;
@@ -152,6 +160,12 @@ li { margin: 6px 0; }
   border-radius: 0 6px 6px 0;
 }
 .muted { color: var(--dim); font-size: 14px; }
+.callout.scripted { font-style: normal; font-size: 15px; }
+.diagram-caption {
+  margin: 0 0 -6px; color: var(--dim);
+  font: 12px/1.4 'Menlo', monospace;
+  text-transform: uppercase; letter-spacing: .08em;
+}
 
 /* impossible reasons */
 .reasons li { margin: 10px 0; }
