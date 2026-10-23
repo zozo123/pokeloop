@@ -1,4 +1,4 @@
-# The single-prompt build (Captain Claw shape)
+# The single-prompt build (DPO-shaped variant)
 
 Paste this into your islo.dev coding agent on a fresh sandbox:
 

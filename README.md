@@ -32,9 +32,7 @@ demonstrate the viewer; no agent was trained.
 |---|---|---|
 | best fitness | +1.5 | **+17.0** |
 | mean fitness | 0.0 | **+12.0** |
-| worst fitness | −1.5 | +6.0 |
 | badges earned (best) | 0 | **1 (Falkner)** |
-| Pokédex seen (best) | 0 | 8 |
 
 ## How it works
 
@@ -154,7 +152,7 @@ the whole rig (DPO-shaped variant).
 - The movie is a scripted playback (`mock_ga.py`). `orchestrator.py` is a separate
   DPO-style loop with Claude and PyBoy; `orchestrator_real.py` fans the GA out to real
   sandboxes with procedural fitness. Neither produced the published results.
-- "Pokémon GO" in the title is a frame, not a game. We don't connect to Niantic
+- "Pokémon GO" in the TL;DR is a frame, not a game. We don't connect to Niantic
   servers and we don't want to.
 
 ## License

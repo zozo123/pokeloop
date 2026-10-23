@@ -214,7 +214,7 @@
 
   <img src="assets/screenshot.png" alt="Final-state dashboard of the scripted playback, with population grid, lineage tree, fitness ranking, and gain curve" class="screenshot">
 
-  <p>The script (<code>GEN_SCRIPT</code> in <code>mock_ga.py</code>) makes the gain curve climb monotonically across generations: mean population fitness goes from <b>0.0 → +12.0</b>, best from <b>+1.5 → +17.0</b>, and the worst individual from <b>−1.5 → +6</b>. This shows what the viewer displays when selection works; it is not evidence that it does.</p>
+  <p>The script (<code>GEN_SCRIPT</code> in <code>mock_ga.py</code>) sets a target best and mean fitness for every generation, rising each time: mean from <b>0.0 → +12.0</b> and best from <b>+1.5 → +17.0</b>. The other individuals get seeded random values around the mean. This shows what the viewer displays when selection works; it is not evidence that it does.</p>
 
   <h3>Scripted milestone order</h3>
   <ol class="milestones">
